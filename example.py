@@ -7,7 +7,12 @@ def a_function(s):
         pass
 
 
-a_function(99999)
+a_function(9109999)
 
 
-print(uf.list_to_str([1, 2, 3], [4, 5, 6], ["ABD", "ZUB"]))
+# print(uf.list_to_str([1, 2, 3], [4, 5, 6], ["ABD", "ZUB"]))
+
+
+a_list = ["12", "13", "3", "44", "s"]
+
+print(uf.join_list(" ", a_list))

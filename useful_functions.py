@@ -53,6 +53,24 @@ def timer(function):
         after = time.time()
         fname = function.__name__
         print(f"{fname} took {after-before} for execution")
-        # return function_call
+        return function_call
 
     return wrapper
+
+
+def join_list(deli, lst) -> str:
+    """
+    Join a list of string to a string using your own delimeter.
+
+    Example usage:
+
+    a_list = ["12", "13", "3", "44", "s"]
+
+    print(uf.join_list(" ", a_list))
+
+    output: "12 13 44 s"
+
+    """
+
+    str_returned = deli.join(lst)
+    return str_returned
