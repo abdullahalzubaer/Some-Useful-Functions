@@ -90,3 +90,20 @@ def str_preproces_1(input_string: str) -> str:
 
     """
     return "".join(c for c in input_string if c.isascii() and not c.isdigit())
+
+
+def str_count(corpus: str, search_string: str) -> int:
+    """
+    Return frequency of a string present in the current corpus.
+
+    Example usage:
+
+    corpus = "your corpus here"
+
+    count = uf.str_count(corpus, "HERE")
+
+    output = 1
+    
+    """
+    count = corpus.count(search_string)
+    return count
