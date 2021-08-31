@@ -16,3 +16,5 @@ a_function(9109999)
 a_list = ["12", "13", "3", "44", "s"]
 
 print(uf.join_list(" ", a_list))
+
+print(uf.str_preproces_1("He44llo ÀÈÌÒÙỲǸẀWo323rld"))

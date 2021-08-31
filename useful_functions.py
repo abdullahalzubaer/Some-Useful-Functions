@@ -74,3 +74,19 @@ def join_list(deli, lst) -> str:
 
     str_returned = deli.join(lst)
     return str_returned
+
+
+def str_preproces_1(input_string: str) -> str:
+    """
+    Return pre-processed string from input string
+
+    Example usage:
+
+    a_non_ascii_digit string = "He43llo ÀÈÌÒÙỲǸẀWo323rld"
+
+    print(uf.str_preprocess(a_non_ascii_digit))
+
+    output: "Hello World"
+
+    """
+    return "".join(c for c in input_string if c.isascii() and not c.isdigit())
