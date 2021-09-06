@@ -107,3 +107,41 @@ def str_count(corpus: str, search_string: str) -> int:
     """
     count = corpus.count(search_string)
     return count
+
+
+def str_remove_lowercase(x: list) -> list:
+
+    """
+    Return a list containing string if not lower case, using filter function
+
+    Example usage: 
+
+    string_list =["ABC", "DEF", "GEMM", "ababv", "asdwd", "ABscw"]
+
+    print(uf.str_remove_uppercase(string_list))
+
+    output = ['ABC', 'DEF', 'GEMM']
+
+    Notes: Filter -> Constructs iterator from those elements of iterable for 
+    which function returns true
+    """
+    return list(filter(lambda x: x.isupper(), x))
+
+
+def str_remove_uppercase(x: list) -> list:
+    """
+    Return a list containing string of lowercase strings using filterfalse() function
+    
+    Example usage:
+
+    string_list =["ABC", "DEF", "GEMM", "ababv", "asdwd", "ABscw"]
+
+    print(uf.str_remove_uppercase(string_list))
+
+    output =['ababv', 'asdwd', 'ABscw']
+    
+    Notes: itertools.filterfalse -> Return the elements which
+    returns False (opposite of filter function)
+
+    """
+    return list(itertools.filterfalse(lambda x: x.isupper(), x))
