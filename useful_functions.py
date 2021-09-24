@@ -1,6 +1,8 @@
 import itertools
 import time
 
+import numpy as np
+
 
 def sorting_1(*args):
     """
@@ -145,3 +147,17 @@ def str_remove_uppercase(x: list) -> list:
 
     """
     return list(itertools.filterfalse(lambda x: x.isupper(), x))
+
+
+def standard_deviation(number: list) -> float:
+    """
+    Return the standard deviation of a list of numbers
+
+    Example usage:
+
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+    print(standard_deviation(numbers))
+    output = 3.162
+    """
+    return round((np.std(number)), 3)
