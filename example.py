@@ -34,3 +34,8 @@ print(uf.str_remove_uppercase(string_list))
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 print(uf.standard_deviation(numbers))
+
+
+to_str = uf.pdf_to_str("rand.pdf")
+
+print(to_str)

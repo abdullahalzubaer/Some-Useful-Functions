@@ -1,6 +1,7 @@
 import itertools
 import time
 
+import fitz
 import numpy as np
 
 
@@ -157,7 +158,26 @@ def standard_deviation(number: list) -> float:
 
     numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
-    print(standard_deviation(numbers))
+    print(uf.standard_deviation(numbers))
     output = 3.162
     """
     return round((np.std(number)), 3)
+
+
+def pdf_to_str(document_path: str) -> str:
+    """
+    Convert pdf documents to strings.
+
+    Example usage:
+
+    to_str = uf.pdf_to_str("rand.pdf")
+
+    output: a long string of all the pdf contents! :)
+
+    
+    """
+    with fitz.open(document_path) as doc:
+        text = str()
+        for page in doc:
+            text += page.getText()
+    return text
