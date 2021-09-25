@@ -1,3 +1,6 @@
+import pandas as pd
+import seaborn as sns
+
 import useful_functions as uf
 
 
@@ -36,6 +39,14 @@ numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 print(uf.standard_deviation(numbers))
 
 
-to_str = uf.pdf_to_str("rand.pdf")
+# to_str = uf.pdf_to_str("rand.pdf")
 
-print(to_str)
+# print(to_str)
+
+
+file_location = "FILE LOCATION"
+
+df_original = pd.read_csv(file_location)
+df_class_label = df_original[["class_label"]]
+
+uf.class_distribution("class_label", df_class_label)

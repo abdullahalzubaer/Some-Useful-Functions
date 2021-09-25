@@ -2,7 +2,11 @@ import itertools
 import time
 
 import fitz
+import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
+
+plt.style.use("ggplot")
 
 
 def sorting_1(*args):
@@ -106,18 +110,17 @@ def str_count(corpus: str, search_string: str) -> int:
     count = uf.str_count(corpus, "HERE")
 
     output = 1
-    
+
     """
     count = corpus.count(search_string)
     return count
 
 
 def str_remove_lowercase(x: list) -> list:
-
     """
     Return a list containing string if not lower case, using filter function
 
-    Example usage: 
+    Example usage:
 
     string_list =["ABC", "DEF", "GEMM", "ababv", "asdwd", "ABscw"]
 
@@ -125,7 +128,7 @@ def str_remove_lowercase(x: list) -> list:
 
     output = ['ABC', 'DEF', 'GEMM']
 
-    Notes: Filter -> Constructs iterator from those elements of iterable for 
+    Notes: Filter -> Constructs iterator from those elements of iterable for
     which function returns true
     """
     return list(filter(lambda x: x.isupper(), x))
@@ -134,7 +137,7 @@ def str_remove_lowercase(x: list) -> list:
 def str_remove_uppercase(x: list) -> list:
     """
     Return a list containing string of lowercase strings using filterfalse() function
-    
+
     Example usage:
 
     string_list =["ABC", "DEF", "GEMM", "ababv", "asdwd", "ABscw"]
@@ -142,7 +145,7 @@ def str_remove_uppercase(x: list) -> list:
     print(uf.str_remove_uppercase(string_list))
 
     output =['ababv', 'asdwd', 'ABscw']
-    
+
     Notes: itertools.filterfalse -> Return the elements which
     returns False (opposite of filter function)
 
@@ -174,10 +177,26 @@ def pdf_to_str(document_path: str) -> str:
 
     output: a long string of all the pdf contents! :)
 
-    
+
     """
     with fitz.open(document_path) as doc:
         text = str()
         for page in doc:
             text += page.getText()
     return text
+
+
+def class_distribution(column_name, class_label_series):
+    """
+    Output a plot showing the class distribution.
+
+
+    Example usage:
+    file_location = "FILE_LOCATION"
+    df_original = pd.read_csv(file_location)
+    df_class_label = df_original[["class_label"]]
+
+    uf.class_distribution("class_label", df_class_label)
+    """
+    sns.countplot(x=column_name, data=class_label_series)
+    plt.show()
