@@ -3,8 +3,11 @@ import time
 
 import fitz
 import matplotlib.pyplot as plt
+import nltk
 import numpy as np
 import seaborn as sns
+import spacy
+from nltk.stem.porter import *
 
 plt.style.use("ggplot")
 
@@ -200,3 +203,19 @@ def class_distribution(column_name, class_label_series):
     """
     sns.countplot(x=column_name, data=class_label_series)
     plt.show()
+
+
+def stemming(your_string: str) -> list:
+    """
+    Output a list of stemmed stings. Algorithm used PotterStemmer
+
+    Example usage:
+    your_string = "The best definition of man is: a being that walks on two legs and is ungrateful"
+
+    stemming(your_string)
+
+    output: ['the', 'best', 'definit', 'of', 'man', 'is', ':', 'a', 'be', 'that', 'walk', 'on', 'two', 'leg', 'and', 'is', 'ungrat']
+    """
+    nlp = spacy.load("en_core_web_sm")
+    doc = nlp(your_string)
+    return [PorterStemmer().stem(token.text) for token in doc]

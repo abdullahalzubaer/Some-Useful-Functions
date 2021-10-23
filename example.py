@@ -44,9 +44,15 @@ print(uf.standard_deviation(numbers))
 # print(to_str)
 
 
-file_location = "FILE LOCATION"
+# file_location = "FILE LOCATION"
+#
+# df_original = pd.read_csv(file_location)
+# df_class_label = df_original[["class_label"]]
+#
+# uf.class_distribution("class_label", df_class_label)
 
-df_original = pd.read_csv(file_location)
-df_class_label = df_original[["class_label"]]
-
-uf.class_distribution("class_label", df_class_label)
+print(
+    uf.stemming(
+        "The best definition of man is: a being that walks on two legs and is ungrateful"
+    )
+)
