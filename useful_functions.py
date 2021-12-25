@@ -235,6 +235,8 @@ def random_int_generator(low: int, high: int, total_number_you_want: int) -> lis
     >> your_rand_int_list = random_int_generator(1, 55, 6)
     >> print(your_rand_int_list)
     >> [46, 47, 17, 51, 21, 22]
+
+    Source: https://stackoverflow.com/a/22842533/12946268
     """
 
     def random_gen(lower, higher):
