@@ -1,4 +1,5 @@
 import itertools
+import random
 import time
 
 import fitz
@@ -219,3 +220,32 @@ def stemming(your_string: str) -> list:
     nlp = spacy.load("en_core_web_sm")
     doc = nlp(your_string)
     return [PorterStemmer().stem(token.text) for token in doc]
+
+
+def random_int_generator(low: int, high: int, total_number_you_want: int) -> list:
+    """
+    Return a list of integer number based on uers given limit
+
+    low: lower int, including.
+    high: higher int, excluding
+    total_number_you_want: Total unique random int you want
+
+    Example usage:
+
+    >> your_rand_int_list = random_int_generator(1, 55, 6)
+    >> print(your_rand_int_list)
+    >> [46, 47, 17, 51, 21, 22]
+    """
+
+    def random_gen(lower, higher):
+        while True:
+            yield random.randrange(lower, higher)
+
+    gen = random_gen(low, high)
+
+    items = set()
+
+    for x in itertools.takewhile(lambda x: len(items) < total_number_you_want, gen):
+        items.add(x)
+
+    return list(items)
