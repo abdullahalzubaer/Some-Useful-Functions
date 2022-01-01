@@ -206,6 +206,9 @@ def class_distribution(column_name, class_label_series):
     plt.show()
 
 
+nlp = spacy.load("en_core_web_sm")
+
+
 def stemming(your_string: str) -> list:
     """
     Output a list of stemmed stings. Algorithm used PotterStemmer
@@ -217,7 +220,6 @@ def stemming(your_string: str) -> list:
 
     output: ['the', 'best', 'definit', 'of', 'man', 'is', ':', 'a', 'be', 'that', 'walk', 'on', 'two', 'leg', 'and', 'is', 'ungrat']
     """
-    nlp = spacy.load("en_core_web_sm")
     doc = nlp(your_string)
     return [PorterStemmer().stem(token.text) for token in doc]
 
@@ -251,3 +253,33 @@ def random_int_generator(low: int, high: int, total_number_you_want: int) -> lis
         items.add(x)
 
     return list(items)
+
+
+deutsche_pipeline = spacy.load("de_core_news_sm")
+
+
+def deutsche_remove_stop_words_and_punc(text: str, print_text=False) -> str:
+    """
+    Returns a string with stop words and punctuation removed for Deutsche text
+
+    text: input Deutsche text
+
+    Example usage:
+
+    >> remove_stop_words_and_punct_de("Die etymologischen Vorformen von deutsch bedeuteten ursprünglich „zum Volk gehörig“")
+    >> print(remove_stop_words_and_punct_de)
+    >> etymologischen Vorformen deutsch bedeuteten ursprünglich Volk gehörig
+
+    Source: https://github.com/cj2001/nodes2021_kg_workshop/blob/main/notebooks/00-populate_basic_graph.ipynb
+    """
+    result = list()
+    raw_doc = deutsche_pipeline(text)
+    for token in raw_doc:
+        if print_text:
+            print(token, token.is_stop)
+            print("|-----------------|")
+        if not token.is_stop and not token.is_punct:
+            result.append(str(token))
+    result = " ".join(result)
+
+    return result
