@@ -10,6 +10,8 @@ import seaborn as sns
 import spacy
 from nltk.stem.porter import *
 
+from transformers import DistilBertTokenizer  # required for this function only "custom_padding()"
+
 plt.style.use("ggplot")
 
 
@@ -283,3 +285,41 @@ def deutsche_remove_stop_words_and_punc(text: str, print_text=False) -> str:
     result = " ".join(result)
 
     return result
+
+
+model_name = "distilbert-base-uncased"
+tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+
+
+def custom_padding(sentence_1: str, sentence_2: str):
+    '''
+    For this required packages is "transformer"
+
+    Compare two sentence and then pad (post) the one that has less tokens with the
+    pad_token_id (defined by the model)
+
+    model used for this example: "distilbert-base-uncased"
+
+    Example usage:
+    >>>sentence_1  = "I’ve been waiting for uploading this on github for a long time"
+    >>>sentence_2  = "This is not that bad!"
+    >>>print(custom_padding(sentence_1, sentence_2))
+    >>> Sentence 1: [1045, 1521, 2310, 2042, 3403, 2005, 2039, 18570, 2023,
+    2006, 21025, 2705, 12083, 2005, 1037, 2146, 2051], Sentence 2: [2023, 2003,
+    2025, 2008, 2919, 999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    '''
+
+    s1_token = tokenizer.tokenize(sentence_1)
+    s2_token = tokenizer.tokenize(sentence_2)
+
+    s1_id = tokenizer.convert_tokens_to_ids(s1_token)
+    s2_id = tokenizer.convert_tokens_to_ids(s2_token)
+
+    if (len(s2_id) < len(s1_id)):
+        for i in range(len(s1_id)-len(s2_id)):
+            s2_id.append(tokenizer.pad_token_id)
+    else:
+        for i in range(len(s2_id)-len(s1_id)):
+            s1_id.append(tokenizer.pad_token_id)
+
+    return f"Sentence 1: {s1_id}, Sentence 2: {s2_id}"

@@ -1,7 +1,8 @@
 import pandas as pd
-import seaborn as sns
 
 import useful_functions as uf
+
+# import seaborn as sns
 
 
 @uf.timer
@@ -65,3 +66,8 @@ print(
         "Die etymologischen Vorformen von deutsch bedeuteten ursprünglich „zum Volk gehörig“"
     )
 )
+
+
+sentence_1 = "I’ve been waiting for uploading this on github for a long time"
+sentence_2 = "This is not that bad!"
+print(uf.custom_padding(sentence_1, sentence_2))
