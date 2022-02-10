@@ -1,12 +1,17 @@
+import csv
+import glob
 import itertools
+import os
 import random
 import string
 import time
+from string import punctuation
 
 import fitz
 import matplotlib.pyplot as plt
 import nltk
 import numpy as np
+import pandas as pd
 import seaborn as sns
 import spacy
 from nltk.corpus import stopwords
@@ -14,9 +19,6 @@ from nltk.stem.porter import *
 from nltk.stem.porter import PorterStemmer
 from transformers import \
     DistilBertTokenizer  # required for this function only "custom_padding()"
-
-from string import punctuation
-
 
 nltk.download("stopwords")
 nltk.download("punkt")
@@ -356,3 +358,25 @@ def remove_stopwords_german(text):
     return " ".join(
         [word for word in no_punctuation.split() if word.lower() not in stpword]
     )
+
+
+def combining_csv(current_dir):
+    '''
+    Combined several csv file to one csv (must same header).
+
+    Please change the delimeter and other arguments according to need.
+
+    Example Usage:
+
+    >>>combine_csv("/content/drive/MyDrive/MyDatasetCollection/argument_mining/train")
+    This will create a combined csv file with name "combined_csv.tsv" on the provided location
+
+    Reference: https://www.freecodecamp.org/news/how-to-combine-multiple-csv-files-with-8-lines-of-code-265183e0854/
+    '''
+    os.chdir(current_dir)
+    extension = 'tsv'
+    all_filenames = [i for i in glob.glob('*.{}'.format(extension))]
+    print(all_filenames)
+    combined_csv = pd.concat([pd.read_csv(f, header=0, delimiter="\t",
+                             quoting=csv.QUOTE_NONE, encoding='utf-8') for f in all_filenames])
+    combined_csv.to_csv(current_dir + "/combined_csv.tsv", index=False, encoding='utf-8-sig')
