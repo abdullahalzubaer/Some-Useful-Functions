@@ -1,5 +1,6 @@
 import itertools
 import random
+import string
 import time
 
 import fitz
@@ -8,9 +9,17 @@ import nltk
 import numpy as np
 import seaborn as sns
 import spacy
+from nltk.corpus import stopwords
 from nltk.stem.porter import *
+from nltk.stem.porter import PorterStemmer
+from transformers import \
+    DistilBertTokenizer  # required for this function only "custom_padding()"
 
-from transformers import DistilBertTokenizer  # required for this function only "custom_padding()"
+from string import punctuation
+
+
+nltk.download("stopwords")
+nltk.download("punkt")
 
 plt.style.use("ggplot")
 
@@ -292,7 +301,7 @@ tokenizer = DistilBertTokenizer.from_pretrained(model_name)
 
 
 def custom_padding(sentence_1: str, sentence_2: str):
-    '''
+    """
     For this required packages is "transformer"
 
     Compare two sentence and then pad (post) the one that has less tokens with the
@@ -307,7 +316,7 @@ def custom_padding(sentence_1: str, sentence_2: str):
     >>> Sentence 1: [1045, 1521, 2310, 2042, 3403, 2005, 2039, 18570, 2023,
     2006, 21025, 2705, 12083, 2005, 1037, 2146, 2051], Sentence 2: [2023, 2003,
     2025, 2008, 2919, 999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-    '''
+    """
 
     s1_token = tokenizer.tokenize(sentence_1)
     s2_token = tokenizer.tokenize(sentence_2)
@@ -315,11 +324,35 @@ def custom_padding(sentence_1: str, sentence_2: str):
     s1_id = tokenizer.convert_tokens_to_ids(s1_token)
     s2_id = tokenizer.convert_tokens_to_ids(s2_token)
 
-    if (len(s2_id) < len(s1_id)):
-        for i in range(len(s1_id)-len(s2_id)):
+    if len(s2_id) < len(s1_id):
+        for _ in range(len(s1_id) - len(s2_id)):
             s2_id.append(tokenizer.pad_token_id)
     else:
-        for i in range(len(s2_id)-len(s1_id)):
+        for _ in range(len(s2_id) - len(s1_id)):
             s1_id.append(tokenizer.pad_token_id)
 
     return f"Sentence 1: {s1_id}, Sentence 2: {s2_id}"
+
+
+def remove_stopwords_german(text):
+    '''
+    Remove stopwards from german text.
+
+    This can also be used to clean texts in csv format
+
+    Examople usage for a single text:
+    >>>remove_stopwords_german("Jeder Satz wurde per Crowdsourcing entweder als unterstützendes Argument, als angreifendes Argument oder als kein Argument in Bezug auf das Thema kommentiert")
+    >>>Satz wurde per Crowdsourcing entweder unterstützendes Argument angreifendes Argument Argument Bezug Thema kommentiert
+
+    Example usage of text cleaning in csv format. It will remove the stopwards for all the item in the column "sentence"
+    >>> train_raw['data'] = train_raw['sentence'].apply(remove_stopwords_german)
+
+
+    Source: https://towardsdatascience.com/cross-topic-argument-mining-learning-how-to-classify-texts-1d9e5c00c4cc
+    '''
+    stpword = stopwords.words("german")
+    no_punctuation = [char for char in text if char not in string.punctuation]
+    no_punctuation = "".join(no_punctuation)
+    return " ".join(
+        [word for word in no_punctuation.split() if word.lower() not in stpword]
+    )

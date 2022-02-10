@@ -71,3 +71,10 @@ print(
 sentence_1 = "I’ve been waiting for uploading this on github for a long time"
 sentence_2 = "This is not that bad!"
 print(uf.custom_padding(sentence_1, sentence_2))
+
+
+print(
+    uf.remove_stopwords_german(
+        "Jeder Satz wurde per Crowdsourcing entweder als unterstützendes Argument, als angreifendes Argument oder als kein Argument in Bezug auf das Thema kommentiert"
+    )
+)
