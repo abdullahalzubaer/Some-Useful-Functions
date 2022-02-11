@@ -371,7 +371,10 @@ def combining_csv(current_dir):
     >>>combine_csv("/content/drive/MyDrive/MyDatasetCollection/argument_mining/train")
     This will create a combined csv file with name "combined_csv.tsv" on the provided location
 
-    Reference: https://www.freecodecamp.org/news/how-to-combine-multiple-csv-files-with-8-lines-of-code-265183e0854/
+    Reference:
+    https://www.freecodecamp.org/news/how-to-combine-multiple-csv-files-with-8-lines-of-code-265183e0854/
+    [For the argument passed for pd.read_csv]: https://stackoverflow.com/questions/39303912/tfidfvectorizer-in-scikit-learn-valueerror-np-nan-is-an-invalid-document
+    
     '''
     os.chdir(current_dir)
     extension = 'tsv'
