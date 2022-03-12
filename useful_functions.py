@@ -6,7 +6,7 @@ import random
 import string
 import time
 from string import punctuation
-
+import pickle
 import fitz
 import matplotlib.pyplot as plt
 import nltk
@@ -374,7 +374,7 @@ def combining_csv(current_dir):
     Reference:
     https://www.freecodecamp.org/news/how-to-combine-multiple-csv-files-with-8-lines-of-code-265183e0854/
     [For the argument passed for pd.read_csv]: https://stackoverflow.com/questions/39303912/tfidfvectorizer-in-scikit-learn-valueerror-np-nan-is-an-invalid-document
-    
+
     '''
     os.chdir(current_dir)
     extension = 'tsv'
@@ -383,3 +383,38 @@ def combining_csv(current_dir):
     combined_csv = pd.concat([pd.read_csv(f, header=0, delimiter="\t",
                              quoting=csv.QUOTE_NONE, encoding='utf-8') for f in all_filenames])
     combined_csv.to_csv(current_dir + "/combined_csv.tsv", index=False, encoding='utf-8-sig')
+
+
+def save_pickle_object(data, path: str):
+    '''
+    Path format: "/content/demo/pickleobject/"
+
+    use case:
+
+    >>>save_pickle_object(data, "/content/demo/pickleobject/")
+
+    the data object will be saved in the sub directory mentioned in here it is
+    pickleobject.
+
+    Therefore the file path will look like this inside the pickleobject folder
+    -> "/content/demo/pickleobject/data.pickle"
+    '''
+    with open(path + '/data.pickle', 'wb') as f:
+        pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+
+
+def load_pickle_object(path: str):
+    '''
+    Provide the path where the pickle object resides.
+    Return will be the dumped pickle object.
+
+    use case:
+
+    >>>pklobject = load_pickle_object("/content/demo/pickleobject/data.pickle")
+    >>>type(pklobject)
+    >>>dict
+
+    '''
+    with open(path, 'rb') as f:
+        data = pickle.load(f)
+    return data
