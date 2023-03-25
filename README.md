@@ -51,3 +51,10 @@ with open("name-of-file.pkl", "rb") as f:
 
 print(file)
 ```
+
+#### Write a dictionary object as json
+
+```python
+with open("file.json", "w") as f:
+    json.dump(file, f, indent=4)
+```
