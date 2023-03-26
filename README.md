@@ -68,10 +68,15 @@ df.to_csv("FILE_NAME.csv", index=False)
 
 #### Compare two dataframes and get the difference
 
-Compare rows: You can compare the rows between two dataframes using the compare() method. This method returns a dataframe containing the differences between two dataframes.
 
 
 ```python
+'''
+Compare rows: You can compare the rows between two dataframes using the compare() method.
+This method returns a dataframe containing the differences between two dataframes.
+
+'''
+
 import pandas as pd
 
 df1 = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
