@@ -58,3 +58,10 @@ print(file)
 with open("file.json", "w") as f:
     json.dump(file, f, indent=4)
 ```
+
+#### save a dataframe locally
+
+```python
+
+df.to_csv("FILE_NAME.csv", index=False)
+````
