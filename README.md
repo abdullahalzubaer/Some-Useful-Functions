@@ -65,3 +65,18 @@ with open("file.json", "w") as f:
 
 df.to_csv("FILE_NAME.csv", index=False)
 ````
+
+#### Compare two dataframes and get the difference
+
+Compare rows: You can compare the rows between two dataframes using the compare() method. This method returns a dataframe containing the differences between two dataframes.
+
+
+```python
+import pandas as pd
+
+df1 = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+df2 = pd.DataFrame({'A': [1, 2, 4], 'B': [4, 5, 6]})
+
+diff = df1.compare(df2)
+print(diff)
+```
