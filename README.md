@@ -128,3 +128,30 @@ for trainIndex, testIndex in folds.split(finalDF.drop(['Target'], axis=1)):
     print(xTest)
 
 ```
+
+#### Splitting a df into train and test split only
+
+```python
+
+'''
+Splitting the arguments_df that has everything to train test split
+'''
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Load the original DataFrame from CSV
+df = pd.read_csv("COMPLETE_DATAFRAME.csv")
+
+
+# Split into train (60%), validation (20%), and test (20%) sets
+train_val_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
+train_df, val_df = train_test_split(train_val_df, test_size=0.25, random_state=42)
+
+# Save the split DataFrames to CSV files
+train_df.to_csv("train_echr_42.csv", index=False)
+val_df.to_csv("validation_echr_42.csv", index=False)
+test_df.to_csv("test_echr_42.csv", index=False)
+
+```
