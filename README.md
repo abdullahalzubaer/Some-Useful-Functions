@@ -85,3 +85,46 @@ df2 = pd.DataFrame({'A': [1, 2, 4], 'B': [4, 5, 6]})
 diff = df1.compare(df2)
 print(diff)
 ```
+
+
+#### Creating data for cross validation 
+
+```python
+
+# Reference: https://stackoverflow.com/questions/61512087/use-kfolds-to-split-dataframe-i-want-the-rows-to-be-split-but-the-columns-are-g
+
+import pandas as pd
+from sklearn.model_selection import KFold
+
+X = [[ 0.87, -1.34,  0.31, 1],
+     [-2.79, -0.02, -0.85, 2],
+     [-1.34, -0.48, -2.55, 3],
+     [ 1.92,  1.48,  0.65, 4],
+     [ 1.92,  1.48,  0.65, 5],
+     [ 1.92,  1.48,  0.65, 6],
+     [ 1.92,  1.48,  0.65, 7],
+     [ 1.92,  1.48,  0.65, 8],
+     [ 1.92,  1.48,  0.65, 9],
+     [ 1.92,  1.48,  0.65, 10]]
+
+finalDF = pd.DataFrame(X, columns=['col1', 'col2', 'col3', 'Target'])
+
+print("=====Complete df======")
+print(finalDF)
+
+folds = KFold(n_splits=5)
+scores = []
+fold = 0
+
+# you have to remove the target columsn by giving its column name.
+
+for trainIndex, testIndex in folds.split(finalDF.drop(['Target'], axis=1)):
+    fold += 1
+    print(f"=========FOLD: {fold} starting ==============")
+    xTrain = finalDF.loc[trainIndex, :]
+    xTest = finalDF.loc[testIndex, :]
+    print(xTrain.shape, xTest.shape)
+    print(xTrain)
+    print(xTest)
+
+```
