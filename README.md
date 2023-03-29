@@ -150,9 +150,23 @@ df = pd.read_csv("COMPLETE_DATAFRAME.csv")
 train_val_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 train_df, val_df = train_test_split(train_val_df, test_size=0.25, random_state=42)
 
+with open(f"train_echr_42.pkl", 'wb') as f: pickle.dump(train_df, f)
+with open(f"val_echr_42.pkl", 'wb') as f: pickle.dump(val_df, f)
+with open(f"test_df_echr_42.pkl", 'wb') as f: pickle.dump(test_df, f)
+
+'''
+ATTENTION! DO NOT USE to_csv method from pandas it saves a dataframe to csv
+file which is inconsistent with the original dataframe ( I have faced this issue, when
+I was reading the csv file that was saved from to_csv method, I was getting null values
+even tho in the original dataframe there was no null values)
+'''
+
+'''
 # Save the split DataFrames to CSV files
+
+# DO NOT USE IT EVER
 train_df.to_csv("train_echr_42.csv", index=False)
 val_df.to_csv("validation_echr_42.csv", index=False)
 test_df.to_csv("test_echr_42.csv", index=False)
-
+'''
 ```
