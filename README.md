@@ -140,6 +140,7 @@ Splitting the arguments_df that has everything to train test split
 # Reference: https://stackoverflow.com/a/42932524/12946268
 
 import pandas as pd
+import pickle
 from sklearn.model_selection import train_test_split
 
 # Load the original DataFrame from CSV
@@ -160,6 +161,11 @@ file which is inconsistent with the original dataframe ( I have faced this issue
 I was reading the csv file that was saved from to_csv method, I was getting null values
 even tho in the original dataframe there was no null values)
 '''
+
+# To read
+
+with open('test_df_echr_42.pkl', 'rb') as f:
+    test = pickle.load(f)
 
 '''
 # Save the split DataFrames to CSV files
