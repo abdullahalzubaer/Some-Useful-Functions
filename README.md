@@ -131,11 +131,16 @@ for trainIndex, testIndex in folds.split(finalDF.drop(['Target'], axis=1)):
 
 #### Splitting a df into train and test split only
 
+:heavy_exclamation_mark: When you are saving the df using pickle then you need to have the same 
+pandas version to unpickle it. For example I was saving a df in jupyterhub that is from the uni passau
+and then I tried to unpickle it locally, it did not work because the pandas version were not same.
+
 ```python
 
 '''
 Splitting the arguments_df that has everything to train test split
 '''
+ 
  
 # Reference: https://stackoverflow.com/a/42932524/12946268
 
