@@ -183,9 +183,9 @@ test_df.to_csv("test_echr_42.csv", index=False)
 ```
 
 
-##### Get current directory
+#### Get current directory
 
-```
+```python
 import os
 import datetime
 
