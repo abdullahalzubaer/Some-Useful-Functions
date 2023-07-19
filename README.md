@@ -181,3 +181,18 @@ val_df.to_csv("validation_echr_42.csv", index=False)
 test_df.to_csv("test_echr_42.csv", index=False)
 '''
 ```
+
+
+##### Get current directory
+
+```
+import os
+import datetime
+
+def print_current_directory():
+    current_directory = os.getcwd()
+    time_now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print(f"Current directory as of {time_now}:\n")
+    print(f"{current_directory}")
+print_current_directory()
+```
