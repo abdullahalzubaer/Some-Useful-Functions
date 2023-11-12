@@ -196,3 +196,33 @@ def print_current_directory():
     print(f"{current_directory}")
 print_current_directory()
 ```
+
+
+### Print in a nice way
+
+```python
+def print_in_box(message):
+    """
+    Print the given message in a box, handling multi-line messages.
+
+    Parameters:
+    message (str): The message to be printed in the box.
+    """
+    # Split the message into lines
+    lines = message.split('\n')
+    # Find the length of the longest line
+    max_length = max(len(line) for line in lines)
+    # Create the top border of the box
+    top_border = "+" + "-" * (max_length + 2) + "+"
+    # Create the bottom border of the box
+    bottom_border = top_border
+
+    # Print the box with the message
+    print(top_border)
+    for line in lines:
+        # Pad each line to the length of the longest line
+        padded_line = line + ' ' * (max_length - len(line))
+        print("| " + padded_line + " |")
+    print(bottom_border)
+
+```
