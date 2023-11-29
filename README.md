@@ -198,23 +198,62 @@ print_current_directory()
 ```
 
 
-### Print in a nice way
+### Print in a nice way with datetime and current working directory
 
 ```python
-def print_in_box(message):
+
+def print_in_box(message: str) -> None:
     """
-    Print the given message in a box, handling multi-line messages.
+    Print a given message along with the current directory and timestamp in a box, separated by a horizontal line.
 
     Parameters:
     message (str): The message to be printed in the box.
     """
+    # Get current directory and timestamp
+    current_directory = os.getcwd()
+    time_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # Prepare the directory and time information
+    dir_info = f"Current directory as of {time_now}:\n{current_directory}"
+
+    # Combine the custom message with the directory information, separated by a line
+    combined_message = message + "\n\n" + "-" * len(max(message.split('\n'), key=len)) + "\n" + dir_info
+
+    # Split the combined message into lines
+    lines = combined_message.split('\n')
+    # Find the length of the longest line
+    max_length = max(len(line) for line in lines)
+    # Create the top and bottom borders of the box
+    top_border = "+" + "-" * (max_length + 2) + "+"
+    bottom_border = top_border
+
+    # Print the box with the combined message
+    print(top_border)
+    for line in lines:
+        # Pad each line to the length of the longest line
+        padded_line = line + ' ' * (max_length - len(line))
+        print("| " + padded_line + " |")
+    print(bottom_border)
+
+```
+
+### Print in a nice way but simpler version
+
+```python
+def print_in_box_simple(message: str) -> None:
+    """
+    Print a given message in a box.
+
+    Parameters:
+    message (str): The message to be printed in the box.
+    """
+
     # Split the message into lines
     lines = message.split('\n')
     # Find the length of the longest line
     max_length = max(len(line) for line in lines)
-    # Create the top border of the box
+    # Create the top and bottom borders of the box
     top_border = "+" + "-" * (max_length + 2) + "+"
-    # Create the bottom border of the box
     bottom_border = top_border
 
     # Print the box with the message
