@@ -272,3 +272,27 @@ def print_in_box_simple(message: str) -> None:
     print(bottom_border)
 
 ```
+
+### Comparing two dataframe if they are identical or not
+
+```python
+def compare_dataframes(df1, df2):
+    # Check if the shape of both dataframes is the same
+    if df1.shape != df2.shape:
+        return False, "Dataframes are not identical: Different shapes."
+
+    # Check if columns and their order are the same
+    if not df1.columns.equals(df2.columns):
+        return False, "Dataframes are not identical: Different columns or column order."
+
+    # Check if index and their order are the same
+    if not df1.index.equals(df2.index):
+        return False, "Dataframes are not identical: Different index or index order."
+
+    # Check if the content of dataframes is the same
+    if not df1.equals(df2):
+        return False, "Dataframes are not identical: Different content."
+
+    return True, "Dataframes are identical."
+
+```
