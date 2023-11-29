@@ -165,6 +165,13 @@ ATTENTION! DO NOT USE to_csv method from pandas it saves a dataframe to csv
 file which is inconsistent with the original dataframe ( I have faced this issue, when
 I was reading the csv file that was saved from to_csv method, I was getting null values
 even tho in the original dataframe there was no null values)
+
+UPDATE
+29.NOV.2023
+
+The inconsistency was due to the nature of the dataset that has carraige return inside it '\r'
+something like that. So if your dataset does not have any carraige return then you can
+use to_csv happily
 '''
 
 # To read
