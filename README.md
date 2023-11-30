@@ -296,3 +296,26 @@ def compare_dataframes(df1, df2):
     return True, "Dataframes are identical."
 
 ```
+
+### Conversion to three decimal place with widgets
+
+```python
+import ipywidgets as widgets
+from IPython.display import display
+
+def round_to_three_decimals(number):
+    rounded_number = round(number, 3)
+    return rounded_number
+
+def on_click(btn):
+    number = float(input_text.value)
+    output_label.value = f"{round_to_three_decimals(number)}"
+
+input_text = widgets.FloatText(description="Number:")
+submit_btn = widgets.Button(description="Convert")
+submit_btn.on_click(on_click)
+output_label = widgets.Label()
+
+display(input_text, submit_btn, output_label)
+
+```
