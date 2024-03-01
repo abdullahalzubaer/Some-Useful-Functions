@@ -208,7 +208,6 @@ print_current_directory()
 ### Print in a nice way with datetime and current working directory
 
 ```python
-
 def print_in_box(message: str) -> None:
     """
     Print a given message along with the current directory and timestamp in a box, separated by a horizontal line.
@@ -218,7 +217,7 @@ def print_in_box(message: str) -> None:
     """
     # Get current directory and timestamp
     current_directory = os.getcwd()
-    time_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    time_now = datetime.now().strftime('%d-%b-%Y %H:%M:%S')
 
     # Prepare the directory and time information
     dir_info = f"Current directory as of {time_now}:\n{current_directory}"
