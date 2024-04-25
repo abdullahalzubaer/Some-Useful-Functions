@@ -318,3 +318,32 @@ output_label = widgets.Label()
 display(input_text, submit_btn, output_label)
 
 ```
+### Save pandas dataframe in the current directory as csv and xlsx
+```python
+def save_dataframe(df, filename):
+    """
+    Saves the given DataFrame to both CSV and Excel formats in the current working directory.
+
+    Args:
+    df (pandas.DataFrame): The DataFrame to save.
+    filename (str): The base filename without extension to use for saving the files.
+
+    Returns:
+    None
+    """
+    # Define file paths
+    csv_file = f"{filename}.csv"
+    excel_file = f"{filename}.xlsx"
+    
+    # Save as CSV
+    df.to_csv(csv_file, index=False)
+    print(f"DataFrame saved as CSV in {csv_file}")
+    
+    # Save as Excel
+    df.to_excel(excel_file, index=False, engine='openpyxl')
+    print(f"DataFrame saved as Excel in {excel_file}")
+
+# Example usage
+# Assuming df_data is your DataFrame and you want to save it as 'data'
+save_dataframe(df_data, './data/after-clean/complete_data')
+```
