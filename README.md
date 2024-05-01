@@ -347,3 +347,39 @@ def save_dataframe(df, filename):
 # Assuming df_data is your DataFrame and you want to save it as 'data'
 save_dataframe(df_data, './data/after-clean/complete_data')
 ```
+
+
+### toggle pandas display settings
+```python
+def toggle_pandas_display_settings(mode='full'):
+    """
+    Toggle the display settings of pandas DataFrame.
+
+    Parameters:
+    - mode: 'full' to display DataFrames without truncation, 'default' to reset to default settings.
+    
+    Example:
+    
+    # To turn on full display:
+    toggle_pandas_display_settings('full')
+
+    # To reset to default settings:
+    toggle_pandas_display_settings('default')
+
+    """
+    if mode == 'full':
+        # Set to display DataFrames without truncation
+        pd.set_option('display.max_rows', None)
+        pd.set_option('display.max_columns', None)
+        pd.set_option('display.max_colwidth', None)  # For pandas versions 1.0 and later
+        # pd.set_option('display.max_colwidth', -1)  # Uncomment for pandas versions before 1.0
+        print("Pandas display settings set to full display mode.")
+    elif mode == 'default':
+        # Reset to pandas default display settings
+        pd.reset_option('display.max_rows')
+        pd.reset_option('display.max_columns')
+        pd.reset_option('display.max_colwidth')
+        print("Pandas display settings reset to default.")
+    else:
+        print("Invalid mode. Please choose 'full' or 'default'.")
+```
