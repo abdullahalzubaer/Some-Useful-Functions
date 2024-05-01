@@ -383,3 +383,40 @@ def toggle_pandas_display_settings(mode='full'):
     else:
         print("Invalid mode. Please choose 'full' or 'default'.")
 ```
+
+### Reads specified sheets from an Excel file using pandas.
+```python
+def read_excel_sheets(file_path, sheets=None, return_type='single'):
+    """
+    Reads specified sheets from an Excel file using pandas.
+
+    :param file_path: str, path to the Excel file.
+    :param sheets: str, int, or list, names or indices of the sheets to read.
+    :param return_type: str, 'single' to return a single DataFrame (if one sheet is specified),
+                        'dict' to return a dictionary of DataFrames (if multiple sheets are specified).
+    :return: DataFrame or dict of DataFrames depending on return_type and sheets.
+    """
+    # Read the sheets based on the provided 'sheets' argument
+    try:
+        data = pd.read_excel(file_path, sheet_name=sheets)
+    except Exception as e:
+        print(f"Failed to read the file: {e}")
+        return None
+
+    # If multiple sheets are read into a dictionary
+    if isinstance(data, dict):
+        if return_type == 'single':
+            # If user wants a single DataFrame but multiple sheets were requested, raise an error
+            raise ValueError("Multiple sheets found but 'single' DataFrame requested. Specify correct 'return_type'.")
+        return data
+    else:
+        if return_type == 'dict':
+            # If user expects a dictionary but only one sheet was read, adjust the return structure
+            return {sheets: data}
+        return data
+# Example usage
+data = read_excel_sheets(file_path='Data_complete_Can_GPT_Replace_Human_Examiners.xlsx',
+                         sheets='Robustness & Extensions')
+data.head(6)
+
+```
