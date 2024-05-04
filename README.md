@@ -556,3 +556,34 @@ output_label = widgets.Label()
 display(input_text, submit_btn, output_label)
 ****
 ```
+
+### select gpu device
+
+```python
+def select_gpu_device(device_id):
+
+    """
+    Note Please: Will be used when I am using huggingface parser and all the code in a script
+    
+    Selects a GPU device if available and prints information about all available GPUs.
+
+    Args:
+    device_id (int): The ID of the GPU device to use.
+
+    Returns:
+    str: The selected device, either a specific GPU or the CPU if no GPU is available.
+    """
+    # Check available GPUs and print their names
+    
+    gpu_count = torch.cuda.device_count()
+    '''
+    print("Available GPUs:", gpu_count)
+    for i in range(gpu_count):
+        print(f"GPU {i}: {torch.cuda.get_device_name(i)}")
+    '''
+    # Choose a specific GPU based on device_id or fallback to CPU if GPUs are unavailable
+    device = f"cuda:{device_id}" if torch.cuda.is_available() and device_id < gpu_count else "cpu"
+    # print_in_box(f"Using device: {device}")
+    
+    return device
+```
