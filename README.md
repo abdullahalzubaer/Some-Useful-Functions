@@ -420,3 +420,139 @@ data = read_excel_sheets(file_path='Data_complete_Can_GPT_Replace_Human_Examiner
 data.head(6)
 
 ```
+
+
+### save dictionary as json
+```python
+def save_dict_as_json(d, filename):
+    """
+    Saves a dictionary as a JSON file, but only if the file does not already exist.
+
+    Parameters:
+    d (dict): The dictionary to save.
+    filename (str): The path and name of the file to save the dictionary to.
+
+    Raises:
+    FileExistsError: If a file with the specified name alre exists.
+    """
+
+    # Check if the file already exists
+    if os.path.exists(filename):
+        raise FileExistsError(f"File '{filename}' already exists.")
+
+    # Create the directory if it does not exist
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+    # Save the dictionary as a JSON file
+    with open(filename, "w") as file:
+        json.dump(d, file, indent=4)
+
+    # print_in_box(f"Result saved successfully at\n{filename}")
+```
+
+
+### Read excel sheets
+
+```python
+def read_excel_sheets(file_path, sheets=None, return_type="single"):
+    """
+    Reads specified sheets from an Excel file using pandas.
+
+    :param file_path: str, path to the Excel file.
+    :param sheets: str, int, or list, names or indices of the sheets to read.
+    :param return_type: str, 'single' to return a single DataFrame (if one sheet is specified),
+                        'dict' to return a dictionary of DataFrames (if multiple sheets are specified).
+    :return: DataFrame or dict of DataFrames depending on return_type and sheets.
+    """
+    # Read the sheets based on the provided 'sheets' argument
+    try:
+        data = pd.read_excel(file_path, sheet_name=sheets)
+    except Exception as e:
+        print(f"Failed to read the file: {e}")
+        return None
+
+    # If multiple sheets are read into a dictionary
+    if isinstance(data, dict):
+        if return_type == "single":
+            # If user wants a single DataFrame but multiple sheets were requested, raise an error
+            raise ValueError(
+                "Multiple sheets found but 'single' DataFrame requested. Specify correct 'return_type'."
+            )
+        return data
+    else:
+        if return_type == "dict":
+            # If user expects a dictionary but only one sheet was read, adjust the return structure
+            return {sheets: data}
+        return data
+```
+### drop columns from padnas
+
+```python
+def drop_columns_from(df, start_column):
+    """
+    Drop all columns from the specified start_column to the end of the DataFrame (inclusive).
+
+    Parameters:
+    df (pd.DataFrame): The DataFrame from which to drop columns.
+    start_column (str): The column name from which to start dropping.
+
+    Returns:
+    pd.DataFrame: A DataFrame with the specified columns removed.
+    """
+    # Get the index of the start column
+    start_index = df.columns.get_loc(start_column)
+
+    # Get the column names to drop from start_index to the end
+    columns_to_drop = df.columns[start_index:]
+
+    # Drop the columns
+    df = df.drop(columns=columns_to_drop)
+    
+    return df
+```
+
+### read csv with fallback
+
+```python
+def read_csv_with_fallback(primary_file, fallback_file):
+    """
+    Reads a CSV file into a DataFrame. If the primary file does not exist, it reads the fallback file.
+
+    Parameters:
+    primary_file (str): The path to the primary CSV file.
+    fallback_file (str): The path to the fallback CSV file.
+
+    Returns:
+    pandas.DataFrame: DataFrame created from the read CSV file.
+    """
+    # Check if the primary file exists, if not, use the fallback file
+    file_to_read = primary_file if os.path.exists(primary_file) else fallback_file
+
+    # Read the CSV file
+    df = pd.read_csv(file_to_read)
+
+    return df
+```
+
+### Convert to three decimal place
+
+```python
+import ipywidgets as widgets
+from IPython.display import display
+
+def round_to_three_decimals(number):
+    rounded_number = round(number, 3)
+    return rounded_number
+
+def on_click(btn):
+    number = float(input_text.value)
+    output_label.value = f"{round_to_three_decimals(number)}"
+
+input_text = widgets.FloatText(description="Number:")
+submit_btn = widgets.Button(description="Convert")
+submit_btn.on_click(on_click)
+output_label = widgets.Label()
+
+display(input_text, submit_btn, output_label)
+****
+```
