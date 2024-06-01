@@ -587,3 +587,52 @@ def select_gpu_device(device_id):
     
     return device
 ```
+
+### Check for empty list and repeated elements in a list of a specified column of a pandas DataFrame
+
+```python
+def find_repeated_and_empty_elements(df, column_name):
+    """
+    This function checks each row in a specified column of a DataFrame for two conditions:
+    1. If the list is empty.
+    2. If there are repeated elements in the list.
+    
+    Parameters:
+    df (pd.DataFrame): The DataFrame to be checked.
+    column_name (str): The name of the column containing the string representations of lists.
+    
+    Outputs:
+    Prints the row index and details if an empty list or repeated elements are found.
+    """
+    def get_repeated_elements(lst):
+        """
+        Helper function to find repeated elements in a list.
+        
+        Parameters:
+        lst (list): The list to check for repeated elements.
+        
+        Returns:
+        list: A list of elements that are repeated.
+        """
+        counter = Counter(lst)
+        return [item for item, count in counter.items() if count > 1]
+    # Iterate through each row in the DataFrame
+    for index, row in df.iterrows():
+        # Convert the string representation of the list to an actual list
+        score = ast.literal_eval(row[column_name])
+        
+        # Check for empty list
+        if not score:
+            print(f"Row {index} has an empty list.")
+        
+        # Check for repeated elements
+        repeated_elements = get_repeated_elements(score)
+        if repeated_elements:
+            print(f"Row {index} has repeated elements: {repeated_elements} in list {score}")
+
+# Call the function with the DataFrame and the column name
+find_repeated_and_empty_elements(df=df_llama3_rank_data,
+                                 column_name='prompt_v1_rank_assessment_llama3_model_ranks')
+
+
+```
