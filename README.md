@@ -322,15 +322,25 @@ display(input_text, submit_btn, output_label)
 ```python
 def save_dataframe(df, filename):
     """
-    Saves the given DataFrame to both CSV and Excel formats in the current working directory.
+    Saves the given DataFrame to both CSV and Excel formats in the specified directory.
 
     Args:
     df (pandas.DataFrame): The DataFrame to save.
-    filename (str): The base filename without extension to use for saving the files.
+    filename (str): The base filename with extension to use for saving the files.
 
     Returns:
     None
     """
+    # Get the directory from the filename
+    directory = os.path.dirname(filename)
+    
+    # Check if the directory exists
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        print(f"Directory created: {directory}")
+    else:
+        print(f"Directory already exists: {directory}")
+    
     # Define file paths
     csv_file = f"{filename}.csv"
     excel_file = f"{filename}.xlsx"
