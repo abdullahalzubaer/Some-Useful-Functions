@@ -646,3 +646,70 @@ find_repeated_and_empty_elements(df=df_llama3_rank_data,
 
 
 ```
+
+
+### Check if two column from two different dataframe are identical or not
+
+```python
+
+def are_columns_identical(df1, col1, df2, col2):
+    """
+    Check if two columns from two different DataFrames are identical.
+    
+    Parameters:
+    df1 (pd.DataFrame): The first DataFrame.
+    col1 (str): The column name from the first DataFrame.
+    df2 (pd.DataFrame): The second DataFrame.
+    col2 (str): The column name from the second DataFrame.
+    
+    Returns:
+    bool: True if the columns are identical, False otherwise.
+    """
+    # Check if the columns exist in their respective DataFrames
+    if col1 not in df1.columns or col2 not in df2.columns:
+        raise ValueError(f"Column not found in DataFrame: {col1} in df1 or {col2} in df2")
+    
+    # Check if the lengths of the columns are the same
+    if len(df1[col1]) != len(df2[col2]):
+        return False
+    
+    # Check if all elements in the columns are the same
+    return df1[col1].equals(df2[col2])
+```
+
+### Check if n number of columns from two different dataframe are identical or not
+
+```python
+def are_multiple_columns_identical(df1, cols1, df2, cols2):
+    """
+    Check if multiple columns from two different DataFrames are identical.
+    
+    Parameters:
+    df1 (pd.DataFrame): The first DataFrame.
+    cols1 (list of str): The column names from the first DataFrame.
+    df2 (pd.DataFrame): The second DataFrame.
+    cols2 (list of str): The column names from the second DataFrame.
+    
+    Returns:
+    bool: True if all specified columns are identical, False otherwise.
+    """
+    # Check if the lengths of the column lists are the same
+    if len(cols1) != len(cols2):
+        raise ValueError("The number of columns to compare must be the same.")
+    
+    # Iterate through each pair of columns and check for equality
+    for col1, col2 in zip(cols1, cols2):
+        # Check if the columns exist in their respective DataFrames
+        if col1 not in df1.columns or col2 not in df2.columns:
+            raise ValueError(f"Column not found in DataFrame: {col1} in df1 or {col2} in df2")
+        
+        # Check if the lengths of the columns are the same
+        if len(df1[col1]) != len(df2[col2]):
+            return False
+        
+        # Check if all elements in the columns are the same
+        if not df1[col1].equals(df2[col2]):
+            return False
+    
+    return True
+```
