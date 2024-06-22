@@ -679,6 +679,8 @@ def are_columns_identical(df1, col1, df2, col2):
 
 ### Check if n number of columns from two different dataframe are identical or not
 
+> The order must be the same as it is given to cols1 and cols2
+
 ```python
 def are_multiple_columns_identical(df1, cols1, df2, cols2):
     """
