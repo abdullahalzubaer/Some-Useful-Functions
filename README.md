@@ -715,3 +715,28 @@ def are_multiple_columns_identical(df1, cols1, df2, cols2):
     
     return True
 ```
+
+### ASCII-Banner
+
+```bash
+
+>>=======================<<
+||                       ||
+||                       ||
+||                       ||
+||   _  _   _     ___ _  ||
+||  /  |_) |_  /\  | |_  ||
+||  \_ | \ |_ /--\ | |_  ||
+||                       ||
+||                       ||
+||                       ||
+>>=======================<<
+
+>>===================================================<<
+|| Developer: Abdullah Al Zubaer                     ||   
+|| Email: abdullahal.zubaer@uni-passau.de            ||
+|| Institution: University of Passau                 ||
+|| Project Page: https://www.uni-passau.de/deepwrite ||   
+>>===================================================<<
+
+```
