@@ -740,3 +740,37 @@ def are_multiple_columns_identical(df1, cols1, df2, cols2):
 >>===================================================<<
 
 ```
+### Return a subset of the df with specified column names
+
+```python
+
+def subset_dataframe(df: pd.DataFrame, columns: list) -> pd.DataFrame:
+    """
+    Returns a subset of the DataFrame with only the specified columns.
+
+    Parameters:
+    df (pd.DataFrame): The original DataFrame.
+    columns (list): A list of column names to include in the subset DataFrame.
+
+    Returns:
+    pd.DataFrame: A subset DataFrame containing only the specified columns, copied to ensure independence from the original DataFrame.
+    Example:
+    
+    data = {
+        'A': [1, 2, 3],
+        'B': [4, 5, 6],
+        'C': [7, 8, 9]
+    }
+    df = pd.DataFrame(data)
+    
+    # List of columns to subset
+    columns_to_keep = ['A', 'C']
+    
+    # Get the subset DataFrame
+    subset_df = subset_dataframe(df, columns_to_keep)
+    """
+    if not all(column in df.columns for column in columns):
+        raise ValueError("One or more columns not found in the DataFrame")
+    
+    return df[columns].copy()
+```
