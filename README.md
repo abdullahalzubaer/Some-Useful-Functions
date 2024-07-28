@@ -71,19 +71,27 @@ df.to_csv("FILE_NAME.csv", index=False)
 
 
 ```python
-'''
-Compare rows: You can compare the rows between two dataframes using the compare() method.
-This method returns a dataframe containing the differences between two dataframes.
+def compare_dataframes(df1, df2, columns):
+    # Compare element-wise differences
+    differences = df1[columns].compare(df2[columns])
+    print("Differences:\n", differences)
 
-'''
+    # Check data types
+    print("\nData Types DF1:\n", df1[columns].dtypes)
+    print("\nData Types DF2:\n", df2[columns].dtypes)
 
-import pandas as pd
+    # Check indices
+    print("\nIndices DF1:\n", df1[columns].index)
+    print("\nIndices DF2:\n", df2[columns].index)
 
-df1 = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
-df2 = pd.DataFrame({'A': [1, 2, 4], 'B': [4, 5, 6]})
+    # Check individual columns for equality
+    for col in columns:
+        equal = df1[col].equals(df2[col])
+        print(f"\nColumn {col} equality: {equal}")
 
-diff = df1.compare(df2)
-print(diff)
+# Call the function to compare DataFrames
+compare_dataframes(temp_pv2, pv2_biased_transformed_ranks, ['mean', 'variance', 'std_dev'])
+
 ```
 
 
