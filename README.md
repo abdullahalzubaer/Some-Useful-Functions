@@ -360,6 +360,8 @@ def save_dataframe(df, filename):
     # Save as Excel
     df.to_excel(excel_file, index=False, engine='openpyxl')
     print(f"DataFrame saved as Excel in {excel_file}")
+    time_now = datetime.now().strftime('%d-%b-%Y %H:%M:%S')
+    print(f"Saved on {time_now}:\n")
 
 # Example usage
 # Assuming df_data is your DataFrame and you want to save it as 'data'
@@ -415,8 +417,10 @@ def read_excel_sheets(file_path, sheets=None, return_type='single'):
     :return: DataFrame or dict of DataFrames depending on return_type and sheets.
     """
     # Read the sheets based on the provided 'sheets' argument
+    time_now = datetime.now().strftime('%d-%b-%Y %H:%M:%S')
     try:
         data = pd.read_excel(file_path, sheet_name=sheets)
+        print(f"{file_path} was read on {time_now}:\n")
     except Exception as e:
         print(f"Failed to read the file: {e}")
         return None
@@ -430,6 +434,7 @@ def read_excel_sheets(file_path, sheets=None, return_type='single'):
     else:
         if return_type == 'dict':
             # If user expects a dictionary but only one sheet was read, adjust the return structure
+            print(f"{file_path} was read on {time_now}:\n")
             return {sheets: data}
         return data
 # Example usage
