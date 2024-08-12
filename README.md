@@ -787,3 +787,39 @@ def subset_dataframe(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     
     return df[columns].copy()
 ```
+#### Filter Dataframe 
+
+```python
+import pandas as pd
+
+def filter_dataframe(df, column_name, match_value, selected_columns=None):
+    """
+    Filters the DataFrame based on the given column name and matching value.
+    
+    Parameters:
+    df (pd.DataFrame): The DataFrame to filter.
+    column_name (str): The name of the column to filter by.
+    match_value (str or int): The value to match in the specified column.
+    selected_columns (list of str, optional): A list of column names to select after filtering. 
+                                              If None, all columns are returned.
+    
+    Returns:
+    pd.DataFrame: The filtered DataFrame.
+    """
+    # Filter the DataFrame
+    filtered_df = df[df[column_name] == match_value]
+    
+    # If selected_columns is provided, select those columns
+    if selected_columns is not None:
+        filtered_df = filtered_df[selected_columns]
+    
+    return filtered_df
+
+# Example usage:
+# Assuming df is your DataFrame
+# filtered_df = filter_dataframe(df, 'Task', 1)
+# or with specific columns:
+# filtered_df = filter_dataframe(df, 'Task', 1, ['Column1', 'Column2'])
+# This will filter the DataFrame where the "Status" column equals "Completed" and return only the "Task" and "Assignee" columns.
+
+```
