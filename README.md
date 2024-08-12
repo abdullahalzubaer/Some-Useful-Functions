@@ -823,3 +823,22 @@ def filter_dataframe(df, column_name, match_value, selected_columns=None):
 # This will filter the DataFrame where the "Status" column equals "Completed" and return only the "Task" and "Assignee" columns.
 
 ```
+#### Find and prinot NaN Rows in pandas dataframe
+
+```python
+
+def find_and_print_nan_rows(dataframe, column_name):
+    if column_name not in dataframe.columns:
+        print(f"Column '{column_name}' does not exist in the DataFrame.")
+        return
+    
+    nan_rows = dataframe[dataframe[column_name].isna()]
+    
+    if nan_rows.empty:
+        print(f"No NaN values found in column '{column_name}'.")
+    else:
+        print(f"Indices of rows with NaN values in column '{column_name}':")
+        print(nan_rows.index.tolist())
+        
+# find_and_print_nan_rows(data, 'Answer')
+```
