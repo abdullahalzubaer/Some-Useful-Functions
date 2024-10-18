@@ -842,3 +842,29 @@ def find_and_print_nan_rows(dataframe, column_name):
         
 # find_and_print_nan_rows(data, 'Answer')
 ```
+
+#### Insert new line after every n words
+
+```python
+def insert_newline_every_n_words(text, n=12):
+    # Split the text into words
+    words = text.split()
+    
+    # Create a list to store lines
+    lines = []
+    
+    # Loop over the words in chunks of size n
+    for i in range(0, len(words), n):
+        # Join the words in the chunk into a line and append to lines list
+        lines.append(' '.join(words[i:i + n]))
+    
+    # Join all the lines with newlines
+    result = '\n'.join(lines)
+    
+    return result
+
+## Example usage:
+# text = "[INSERT_YOUR_LONG TEXT]"
+#formatted_text = insert_newline_every_n_words(text, 11)
+#print(formatted_text)
+```
