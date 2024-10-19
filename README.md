@@ -868,3 +868,60 @@ def insert_newline_every_n_words(text, n=12):
 #formatted_text = insert_newline_every_n_words(text, 11)
 #print(formatted_text)
 ```
+#### Reorder words randomly from a string and return
+
+```python
+def reorder_words_randomly(text: str, n: int) -> str :
+    
+    """
+    Reorder n words in the given text randomly and return the modified sentence.
+    
+    Args:
+        text (str): The input sentence to be modified.
+        n (int): The number of words to shuffle.
+    
+    Returns:
+        str: The sentence with n words shuffled.
+    """
+
+    # Split the text into individual words
+    words = text.split()
+    total_words = len(words)
+    
+    # If n is greater than total words in the text, set n to total words
+    n = min(n, total_words)
+    
+    # If n is 0 or the total words are less than 2, return the original text
+    if n == 0 or total_words < 2:
+        return text
+    
+    # Keep shuffling until the new order is different from the original
+    while True:
+        # Extract n random indices without replacement
+        indices = random.sample(range(total_words), n)
+        
+        # Extract the words at those indices
+        words_to_shuffle = [words[i] for i in indices]
+        
+        # Shuffle the extracted words
+        random.shuffle(words_to_shuffle)
+        
+        # Put the shuffled words back into their original positions
+        shuffled_words = words[:]
+        for idx, word_idx in enumerate(indices):
+            shuffled_words[word_idx] = words_to_shuffle[idx]
+        
+        # If the shuffled words are different from the original, return them
+        if shuffled_words != words:
+            return ' '.join(shuffled_words)
+'''
+# Example usage
+text = "one two three four five six seven eight nine ten"
+i=0
+while i<10:
+    i+=1
+    shuffled_sentence = reorder_words_randomly(text, 2)
+    print(shuffled_sentence)
+'''
+```
+
