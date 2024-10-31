@@ -537,22 +537,27 @@ def drop_columns_from(df, start_column):
 ### read csv with fallback
 
 ```python
-def read_csv_with_fallback(primary_file, fallback_file):
+def read_file_with_fallback(primary_file, fallback_file):
     """
-    Reads a CSV file into a DataFrame. If the primary file does not exist, it reads the fallback file.
+    Reads a file (CSV or Excel) into a DataFrame. If the primary file does not exist, it reads the fallback file.
 
     Parameters:
-    primary_file (str): The path to the primary CSV file.
-    fallback_file (str): The path to the fallback CSV file.
+    primary_file (str): The path to the primary file (CSV or Excel).
+    fallback_file (str): The path to the fallback file (CSV or Excel).
 
     Returns:
-    pandas.DataFrame: DataFrame created from the read CSV file.
+    pandas.DataFrame: DataFrame created from the read file.
     """
-    # Check if the primary file exists, if not, use the fallback file
+    # Determine which file to read
     file_to_read = primary_file if os.path.exists(primary_file) else fallback_file
 
-    # Read the CSV file
-    df = pd.read_csv(file_to_read)
+    # Check file extension and read accordingly
+    if file_to_read.endswith('.csv'):
+        df = pd.read_csv(file_to_read)
+    elif file_to_read.endswith('.xlsx'):
+        df = pd.read_excel(file_to_read)
+    else:
+        raise ValueError("Unsupported file format. Only .csv and .xlsx are supported.")
 
     return df
 ```
