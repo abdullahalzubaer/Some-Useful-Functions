@@ -550,7 +550,7 @@ def read_file_with_fallback(primary_file, fallback_file):
     """
     # Determine which file to read
     file_to_read = primary_file if os.path.exists(primary_file) else fallback_file
-
+    
     # Print message indicating which file is being read
     print(f"Reading from {'primary' if file_to_read == primary_file else 'fallback'} file: {file_to_read}")
 
