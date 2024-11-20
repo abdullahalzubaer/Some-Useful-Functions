@@ -933,3 +933,46 @@ while i<10:
 '''
 ```
 
+##### Compare the values of multiple columns from two DataFrames, ignoring column names
+
+```python
+def compare_columns_by_values(df1, cols1: list[str], df2, cols2: list[str], reset_index=True) -> bool:
+    """
+    Compare the values of multiple columns from two DataFrames, ignoring column names.
+    The order of the columns must be the same in both DataFrames i.e.
+    cols1[0] is compared to cols2[0], cols1[1] is compared to cols2[1], and so on.
+
+    Args:
+        df1 (pd.DataFrame): First DataFrame.
+        cols1 (list[str]): Columns to compare from the first DataFrame.
+        df2 (pd.DataFrame): Second DataFrame.
+        cols2 (list[str]): Columns to compare from the second DataFrame.
+        reset_index (bool): Whether to reset the index before comparison. Default is True.
+
+    Returns:
+        bool: True if the selected columns are equal in both DataFrames, False otherwise.
+
+    Example:
+    df1 = pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})
+    df2 = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
+
+    result = compare_columns_by_values(df1, ['a', 'b'], df2, ['x', 'y'])
+    print(result)  # True
+
+    # Order of the columns matters and it returns False
+    result = compare_columns_by_values(df1, ['b', 'a'], df2, ['x', 'y'])
+    print(result)  # False
+    """
+    # Extract subsets of the DataFrames
+    subset1 = df1[cols1]
+    subset2 = df2[cols2]
+    
+    # Optionally reset the index
+    if reset_index:
+        subset1 = subset1.reset_index(drop=True)
+        subset2 = subset2.reset_index(drop=True)
+    
+    # Compare values
+    return (subset1.values == subset2.values).all() and subset1.to_numpy().tolist() == subset2.to_numpy().tolist()
+
+```
