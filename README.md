@@ -977,3 +977,103 @@ def compare_columns_by_values(df1, cols1: list[str], df2, cols2: list[str], rese
     return (subset1.values == subset2.values).all() and subset1.to_numpy().tolist() == subset2.to_numpy().tolist()
 
 ```
+
+
+#### Check if the extraction function is working properly for columns contaiing the LLMs output
+
+```python
+def extract_score(value) -> float:
+    """Extracts the score from a string value formatted as 'Punktzahl: <number>'. Returns None if no score is found."""
+
+    match = re.search(r'Punktzahl:\s*(\d+(?:\.\d+)?)', str(value))
+
+    return float(match.group(1)) if match else 'ERROR_COULD_NOT_EXTRACT'
+
+def apply_extract_score_and_report(df, columns_to_check, extract_score_func):
+    """
+    Applies the extract_score function to specified columns in the dataframe and tracks errors.
+    Generates a summary report of the results.
+
+    Parameters:
+    - df (pandas.DataFrame): The dataframe containing the data.
+    - columns_to_check (list of str): The list of column names to process.
+    - extract_score_func (callable): The function used to extract the score.
+
+    Returns:
+    - dict: A summary report containing total errors and details per column.
+    - int: Total number of errors found across all columns.
+    """
+    total_errors = 0
+    summary_report = {}
+
+    for col in columns_to_check:
+        if col not in df.columns:
+            print(f"NOT FOUND: Column '{col}' not found in dataframe. Skipping...")
+            summary_report[col] = {
+                'errors_found': False,
+                'error_count': 0,
+                'error_rows': [],
+                'status': 'Column not found'
+            }
+            continue
+
+        print(f"Processing column: {col}")
+        extracted_col_name = f"{col}_Extracted"
+
+        # Apply the function
+        df[extracted_col_name] = df[col].apply(lambda x: extract_score_func(x))
+
+        # Identify problematic rows
+        errors = df[df[extracted_col_name] == 'ERROR_COULD_NOT_EXTRACT']
+        error_count = len(errors)
+        total_errors += error_count
+
+        # Store error details in the summary report
+        summary_report[col] = {
+            'errors_found': error_count > 0,
+            'error_count': error_count,
+            'error_rows': errors.index.tolist(),
+            'status': 'Processed with errors' if error_count > 0 else 'Processed successfully'
+        }
+
+        # Uncomment the following lines if you want to see the errors
+        # if error_count > 0:
+        #     print(f"\nIssues found in column '{col}':")
+        #     for idx, row in errors.iterrows():
+        #         print(f"Row {idx}: Text - {row[col]}")
+
+    if total_errors == 0:
+        print("\nNo errors found in any column.")
+    else:
+        print("\nErrors were found. See details above.")
+        print(f"Total errors found: {total_errors}")
+
+    # Return the summary report (empty or not)
+    return summary_report, total_errors
+
+
+models = ["gemma2", "llama3.1", 'llama3', 'mistral']
+columns_to_check = [
+    f"prompt_v1_original_macro_eco_de_complete_response_{model}_iteration_{i}"
+    for model in models for i in range(1, 11)
+]
+
+# Call the function
+summary_report, total_errors = apply_extract_score_and_report(df=df_to_score,
+                                                              columns_to_check=columns_to_check,
+                                                              extract_score_func=extract_score)
+
+# Print the summary report only if errors were found
+if total_errors > 0:
+    print("\nSummary Report:")
+    for col, details in summary_report.items():
+        if details['errors_found']:
+            print(f"Column: {col}")
+            print(f"  Status: {details['status']}")
+            print(f"  Errors Found: {details['errors_found']}")
+            print(f"  Error Count: {details['error_count']}")
+            print(f"  Error Rows: {details['error_rows']}")
+else:
+    print("\nNo errors to report.")
+
+```
