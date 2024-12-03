@@ -982,6 +982,13 @@ def compare_columns_by_values(df1, cols1: list[str], df2, cols2: list[str], rese
 #### Check if the extraction function is working properly for columns contaiing the LLMs output
 
 ```python
+'''
+If there are errors then the regular expression needs modification
+
+You need to know which columns you want to check the function with - then you pass the columns as a list of strings
+'''
+
+
 def extract_score(value) -> float:
     """Extracts the score from a string value formatted as 'Punktzahl: <number>'. Returns None if no score is found."""
 
@@ -1051,8 +1058,10 @@ def apply_extract_score_and_report(df, columns_to_check, extract_score_func):
     # Return the summary report (empty or not)
     return summary_report, total_errors
 
-
+#CHANGEHERE#
 models = ["gemma2", "llama3.1", 'llama3', 'mistral']
+
+#CHANGEHERE#
 columns_to_check = [
     f"prompt_v1_original_macro_eco_de_complete_response_{model}_iteration_{i}"
     for model in models for i in range(1, 11)
