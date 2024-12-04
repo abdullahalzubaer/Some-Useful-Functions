@@ -1086,3 +1086,24 @@ else:
     print("\nNo errors to report.")
 
 ```
+#### Filtering pandas dataframe based on specified string present in the df
+```python
+import pandas as pd
+
+# Example dataframe
+data = {
+    "name": ["Alice", "Bob", "Charlie"],
+    "age": [25, 30, 35],
+    "score_math": [90, 85, 80],
+    "score_english": [88, 92, 78],
+    "total_score": [178, 177, 158],
+}
+
+df = pd.DataFrame(data)
+
+# Use 'filter' with 'regex' to select columns matching the regex pattern
+regex_pattern = r"score"  # Matches any column containing "score"
+filtered_df = df.filter(regex=regex_pattern, axis=1)
+
+print(filtered_df)
+```
