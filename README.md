@@ -1107,3 +1107,23 @@ filtered_df = df.filter(regex=regex_pattern, axis=1)
 
 print(filtered_df)
 ```
+
+####  Compare two strings using SequenceMatcher and print the differences.
+```python
+from difflib import SequenceMatcher
+
+def compare_strings(str1, str2):
+    """
+    Compare two strings using SequenceMatcher and print the differences.
+
+    Args:
+        str1 (str): The first string to compare.
+        str2 (str): The second string to compare.
+    """
+    matcher = SequenceMatcher(None, str1, str2)
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        print(f"{tag}: '{str1[i1:i2]}' vs '{str2[j1:j2]}'")
+
+# Example usage:
+# compare_strings("string1", "string2")
+```
