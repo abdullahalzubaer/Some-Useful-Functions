@@ -335,7 +335,7 @@ def save_dataframe(df, filename):
 
     Args:
     df (pandas.DataFrame): The DataFrame to save.
-    filename (str): The base filename with extension to use for saving the files.
+    filename (str): The base filename without extension to use for saving the files.
 
     Returns:
     None
