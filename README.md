@@ -1127,3 +1127,32 @@ def compare_strings(str1, str2):
 # Example usage:
 # compare_strings("string1", "string2")
 ```
+#### Check any string if present in any column in DF
+```python
+def check_string_in_any_column(df, string_to_check):
+    """
+    Check if a given string is present in any column name of a DataFrame.
+
+    Parameters:
+    df (pd.DataFrame): The DataFrame to check.
+    string_to_check (str): The substring to look for in column names.
+
+    Returns:
+    bool: True if the string is present in any column name, False otherwise.
+    """
+    # Filter and print columns containing the substring
+    matching_columns = [col for col in df.columns if string_to_check in col]
+    
+    if matching_columns:
+        print(f"Columns containing '{string_to_check}': {matching_columns}")
+        print(f"Total columns found: {len(matching_columns)}")
+        return True
+    else:
+        print(f"No columns contain '{string_to_check}'.")
+        return False
+
+# Example usage
+# string_to_check = "temp_0.7_topP_0.8_topK_20"
+# print(check_string_in_any_column(df_to_analyze, string_to_check))
+```
+   
